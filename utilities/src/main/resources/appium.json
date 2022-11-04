@@ -1,0 +1,30 @@
+{
+  "servers": [
+    {
+      "config": "config1",
+      "ip": "0.0.0.0",
+      "port": 4725,
+      "device": "android12",
+      "app": "apk"
+    }
+  ],
+  "configs": {
+    "config1": {
+      "android": "/Users/ivanramirez/Library/Android/sdk",
+      "java": "/Library/Java/JavaVirtualMachines/graalvm-ce-java11-22.3.0/Contents/Home",
+      "node": "/usr/local/bin/node",
+      "executable": "/usr/local/bin/appium",
+      "log": "target/appium.log"
+    }
+  },
+  "apps": {
+    "apk": "Test.apk",
+    "ipa": "Test.ipa"
+  },
+  "capabilities": {
+    "android12": {
+      "appium:autoGrantPermissions": true,
+      "appium:deviceName": "RF8M40X3BTY"
+    }
+  }
+}

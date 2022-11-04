@@ -1,0 +1,17 @@
+# Project exclude paths
+.idea
+
+/android/target/
+/commons/target/
+/ios/target
+
+/android/src/test/resources/apps/*
+/ios/src/test/resources/apps/*
+
+.allure
+*/.allure
+allure-report
+*/allure-report
+allure-results
+*/allure-results
+*/reports
