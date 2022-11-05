@@ -4,7 +4,7 @@
       "config": "config1",
       "ip": "0.0.0.0",
       "port": 4725,
-      "device": "android12",
+      "device": "android",
       "app": "apk"
     }
   ],
@@ -18,12 +18,14 @@
     }
   },
   "apps": {
-    "apk": "Test.apk",
-    "ipa": "Test.ipa"
+    "apk": "Android.SauceLabs.Mobile.Sample.app.2.7.1.apk",
+    "app": "iOS.Simulator.SauceLabs.Mobile.Sample.app.2.7.1.app",
+    "ipa": "iOS.RealDevice.SauceLabs.Mobile.Sample.app.2.7.1.ipa"
   },
   "capabilities": {
-    "android12": {
+    "android": {
       "appium:autoGrantPermissions": true,
+      "appium:appWaitActivity": "*",
       "appium:deviceName": "RF8M40X3BTY"
     }
   }

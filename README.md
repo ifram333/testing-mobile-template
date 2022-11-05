@@ -29,6 +29,8 @@ The following are the dependencies of the project:
 | Allure Cucumber JVM | 2.19.0 |
 | Guava | 31.1-jre |
 | JSON | 20220924 |
+| Tesseract | 5.4.0 |
+| Joda Time | 2.12.1 |
 
 ## Project structure
 
@@ -195,6 +197,67 @@ identified with a nickname.
     "appium:deviceName": "XXXXXXXXX"
   }
 }
+```
+
+## To keep in mind before executing on MacOS
+
+The Tesseract dependency has to be adequated to run on MacOS, follow the instructions below:
+
+1. Install Tesseract on your MacOS
+
+To install Tesseract, run the following command on your terminal:
+
+`sudo port install tesseract`
+
+For Brew users, run the command:
+
+`brew install tesseract`
+
+2. Go to the Tesseract maven folder
+
+`cd /Users/%username%/.m2/repository/net/sourceforge/tess4j/tess4j/%version%`
+
+> %username% is the name of the user registered on the MacOS
+
+> %version% is the Tesseract's version number registered in the pom.xml file
+
+3. Create a folder named 'darwin'
+
+`mkdir darwin`
+
+4. Update the .jar file corresponding to the Tesseract dependency adding the darwin folder into it
+
+`jar uf tess4j-%version%.jar darwin`
+
+> %version% is the Tesseract's version number registered in the pom.xml file
+
+5. Copy the .dylib file downloaded in the first step into the darwin folder
+
+`cp /usr/local/Cellar/tesseract/%version%/lib/libtesseract.%#%.dylib darwin/libtesseract.dylib`
+
+> %version% is the Tesseract's version number downloaded in the first step
+
+> %#% is the first number of the Tessearct's version number (e.g. 5)
+
+6. Update the .jar file corresponding to the Tesseract dependency adding the .dylib file into it
+
+`jar uf tess4j-%version%.jar darwin/libtesseract.dylib`
+
+> %version% is the Tesseract's version number registered in the pom.xml file
+
+7. Validate the .jar file has the darwin folder and the .dylib file on it
+
+`jar tf tess4j-%version%.jar`
+
+> %version% is the Tesseract's version number registered in the pom.xml file
+
+If everything is ok, the last command will show the content table of the .jar file and we will be able to see the darwin folder and the .dylib file
+
+```
+META-INF/MANIFEST.MF
+...
+darwin/
+darwin/libtesseract.dylib
 ```
 
 ## Executing the project

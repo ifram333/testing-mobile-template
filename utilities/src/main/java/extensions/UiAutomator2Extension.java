@@ -1,9 +1,9 @@
 package extensions;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.functions.ExpectedCondition;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -115,11 +115,52 @@ public class UiAutomator2Extension {
 		scroll( direction, null );
 	}
 
-	public static RemoteWebElement getElement ( By locator ) {
-		return wait.until( ( ExpectedCondition< RemoteWebElement > ) androidDriver -> {
-			assert androidDriver != null;
-			return ( RemoteWebElement ) androidDriver.findElement( locator );
-		} );
+	/*
+	Function to scroll to an element.
+	 */
+	public static RemoteWebElement scrollTo ( By logator, int maxScrolls ) {
+		int counter = 0;
+		boolean nextScroll = true;
+		Map< String, Object > params = new HashMap<>( );
+
+		Dimension size = driver.manage( ).window( ).getSize( );
+		int width = size.getWidth( );
+		int height = size.getHeight( );
+		int left = ( int ) ( width * 0.1 );
+		int top = ( int ) ( height * 0.1 );
+
+		params.put( "left", left );
+		params.put( "top", top );
+		params.put( "width", width );
+		params.put( "height", height );
+
+		do {
+			try {
+				return ( RemoteWebElement ) driver.findElement( logator );
+			} catch ( NoSuchElementException e ) {
+				params.put( "direction", "up" );
+				params.put( "percent", 0.8 );
+				driver.executeScript( "mobile: scrollGesture", params );
+			}
+			counter++;
+		} while ( counter < maxScrolls );
+
+		do {
+			try {
+				return ( RemoteWebElement ) driver.findElement( logator );
+			} catch ( NoSuchElementException e ) {
+				params.put( "direction", "down" );
+				params.put( "percent", 0.8 );
+				driver.executeScript( "mobile: scrollGesture", params );
+			}
+			counter--;
+		} while ( counter > 0 );
+
+		return null;
+	}
+
+	public static RemoteWebElement scrollTo ( By locator ) {
+		return scrollTo( locator, 5 );
 	}
 
 	/*

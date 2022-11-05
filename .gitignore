@@ -2,11 +2,8 @@
 .idea
 
 /android/target/
-/commons/target/
+/utilities/target/
 /ios/target
-
-/android/src/test/resources/apps/*
-/ios/src/test/resources/apps/*
 
 .allure
 */.allure
