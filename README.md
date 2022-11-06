@@ -21,7 +21,7 @@ The following are the dependencies of the project:
 | Cucumber Gherkin | 24.1.0 |
 | TestNG | 7.6.1 |
 | Appium Java | 8.2.0 |
-| Selenium Java | 4.5.3 |
+| Selenium Java | 4.5.0 |
 | Log4j Core | 2.19.0 |
 | Log4J API | 2.19.0 |
 | Slf4j API | 2.0.3 |
