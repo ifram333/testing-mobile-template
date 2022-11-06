@@ -3,6 +3,8 @@ package appium;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import readers.AppiumJsonReader;
 
 import java.io.File;
@@ -11,6 +13,7 @@ import java.util.Map;
 
 public class AppiumServer {
 
+	private static final Logger logger = LogManager.getLogger( );
 	private static AppiumDriverLocalService appiumServer = AppiumDriverLocalService.buildDefaultService( );
 
 	public static void start ( int index ) {
@@ -65,6 +68,8 @@ public class AppiumServer {
 		 */
 		appiumServer = AppiumDriverLocalService.buildService( appiumBuilder );
 		appiumServer.start( );
+
+		logger.info( "Appium server started" );
 	}
 
 	public static String getURL ( ) {
@@ -86,6 +91,8 @@ public class AppiumServer {
 		Stop APPIUM Server.
 		 */
 		appiumServer.stop( );
+
+		logger.info( "Appium server stopped" );
 	}
 
 }

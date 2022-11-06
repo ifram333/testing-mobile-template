@@ -54,12 +54,11 @@ testing-mobile-template
 |     | | | Page.java
 |     | | | BasePage.java
 |     | | | *Pages.java
-|     | └─sections
-|     | | | *Pages.java
 |     | └─steps
 |     | | | BaseSteps.java
 |     | | | ClickSteps.java
 |     | | | CompoundSteps.java
+|     | | | SendKeysSteps.java
 |     | | | SwipeSteps.java
 |     | | | ValidationSteps.java
 |     | | AndroidRunnerTest.java

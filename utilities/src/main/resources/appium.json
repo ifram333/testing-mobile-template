@@ -5,29 +5,38 @@
       "ip": "0.0.0.0",
       "port": 4725,
       "device": "android",
-      "app": "apk"
+      "app": "apk",
+      "device-name": "Google Pixel 4",
+      "device-os": "Android",
+      "device-os-version": "12"
     },
     {
       "config": "config1",
       "ip": "0.0.0.0",
       "port": 4725,
       "device": "ios-simulator",
-      "app": "app"
+      "app": "app",
+      "device-name": "iPhone 14",
+      "device-os": "iOS",
+      "device-os-version": "16.1"
     },
     {
       "config": "config1",
       "ip": "0.0.0.0",
       "port": 4725,
       "device": "ios-real",
-      "app": "ipa"
+      "app": "ipa",
+      "device-name": "iPhone XS Max",
+      "device-os": "iOS",
+      "device-os-version": "16.1"
     }
   ],
   "configs": {
     "config1": {
-      "android": "/Path/to/Android/sdk",
-      "java": "/Path/to/jdk11/Contents/Home",
-      "node": "/Path/to/node",
-      "executable": "/Path/to/appium",
+      "android": "/Users/ivanramirez/Library/Android/sdk",
+      "java": "/Library/Java/JavaVirtualMachines/graalvm-ce-java11-22.3.0/Contents/Home",
+      "node": "/usr/local/bin/node",
+      "executable": "/usr/local/bin/appium",
       "log": "target/appium.log"
     }
   },
@@ -40,7 +49,7 @@
     "android": {
       "appium:autoGrantPermissions": true,
       "appium:appWaitActivity": "*",
-      "appium:deviceName": "###########"
+      "appium:deviceName": "RF8M40X3BTY"
     },
     "ios-simulator": {
       "appium:platformVersion": "16.1",

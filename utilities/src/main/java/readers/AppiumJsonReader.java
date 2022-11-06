@@ -85,6 +85,18 @@ public class AppiumJsonReader {
 		return servers.get( index ).get( "app" ).toString( );
 	}
 
+	public static String getDeviceName ( int index ) {
+		return servers.get( index ).get( "device-name" ).toString( );
+	}
+
+	public static String getDeviceOS ( int index ) {
+		return servers.get( index ).get( "device-os" ).toString( );
+	}
+
+	public static String getDeviceOSVersion ( int index ) {
+		return servers.get( index ).get( "device-os-version" ).toString( );
+	}
+
 	public static String getAppName ( int index ) {
 		return apps.get( getApp( index ) ).toString( );
 	}

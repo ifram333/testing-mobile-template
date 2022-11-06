@@ -13,6 +13,8 @@
 
     <properties>
         <suite>testng.xml</suite>
+        <allure.results.directory>${project.build.directory}/reports/results</allure.results.directory>
+        <allure.report.directory>${project.build.directory}/reports/report</allure.report.directory>
     </properties>
 
     <build>
@@ -30,7 +32,7 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>
-                            ${project.build.directory}/reports/results
+                            ${allure.results.directory}
                         </allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
@@ -58,6 +60,24 @@
                 </configuration>
             </plugin>
 
+            <!-- Properties Configuration -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>${maven.properties.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.outputDirectory}/pom.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Allure Configuration -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
@@ -68,9 +88,9 @@
                     <allureDownloadUrl>
                         https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.cucumber.jvm.version}/allure-commandline-${allure.cucumber.jvm.version}.zip
                     </allureDownloadUrl>
-                    <reportDirectory>${project.build.directory}/reports/report
+                    <reportDirectory>${allure.report.directory}
                     </reportDirectory>
-                    <resultsDirectory>${project.build.directory}/reports/results
+                    <resultsDirectory>${allure.results.directory}
                     </resultsDirectory>
                 </configuration>
             </plugin>
