@@ -83,6 +83,9 @@ testing-mobile-template
 |     |	└─extensions
 |     |	| │ UiAutomator2Extension.java
 |     |	| │ ExpectedConditionsExtension.java
+|     |	| │ XCUITestExtension.java
+|     |	└─helpers
+|     |	| │ OCRHelper.java
 |     |	└─readers
 |     |	| │ AppiumJsonReader.java
 |     └─resources

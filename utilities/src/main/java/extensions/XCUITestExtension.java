@@ -2,9 +2,8 @@ package extensions;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -14,7 +13,7 @@ import java.util.Map;
 /*
 This class extends the basic functionalities of Appium, allowing to have new actions
  */
-public class UiAutomator2Extension {
+public class XCUITestExtension {
 
 	private static AppiumDriver driver;
 	private static WebDriverWait wait;
@@ -27,23 +26,8 @@ public class UiAutomator2Extension {
 	/*
 	Function to swipe an element to any direction. If the element is null, the full screen of the device will be swiped.
 	 */
-	public static void swipe ( DIRECTION direction, float percent, RemoteWebElement element ) {
+	public static void swipe ( DIRECTION direction, RemoteWebElement element ) {
 		Map< String, Object > params = new HashMap<>( );
-
-		if ( element != null ) {
-			params.put( "elementId", element.getId( ) );
-		} else {
-			Dimension size = driver.manage( ).window( ).getSize( );
-			int width = size.getWidth( );
-			int height = size.getHeight( );
-			int left = ( int ) ( width * 0.1 );
-			int top = ( int ) ( height * 0.1 );
-
-			params.put( "left", left );
-			params.put( "top", top );
-			params.put( "width", width );
-			params.put( "height", height );
-		}
 
 		switch ( direction ) {
 			case UP:
@@ -60,14 +44,17 @@ public class UiAutomator2Extension {
 				break;
 		}
 
-		params.put( "percent", percent );
-		params.put( "speed", "1100" );
+		params.put( "velocity", "1100" );
 
-		driver.executeScript( "mobile: swipeGesture", params );
+		if ( element != null ) {
+			params.put( "element", element.getId( ) );
+		}
+
+		driver.executeScript( "mobile: swipe", params );
 	}
 
 	public static void swipe ( DIRECTION direction ) {
-		swipe( direction, ( float ) 0.8, null );
+		swipe( direction, null );
 	}
 
 	/*
@@ -76,21 +63,6 @@ public class UiAutomator2Extension {
 	public static void scroll ( DIRECTION direction, RemoteWebElement element ) {
 		Map< String, Object > params = new HashMap<>( );
 
-		if ( element != null ) {
-			params.put( "elementId", element.getId( ) );
-		} else {
-			Dimension size = driver.manage( ).window( ).getSize( );
-			int width = size.getWidth( );
-			int height = size.getHeight( );
-			int left = ( int ) ( width * 0.1 );
-			int top = ( int ) ( height * 0.1 );
-
-			params.put( "left", left );
-			params.put( "top", top );
-			params.put( "width", width );
-			params.put( "height", height );
-		}
-
 		switch ( direction ) {
 			case UP:
 				params.put( "direction", "up" );
@@ -106,9 +78,11 @@ public class UiAutomator2Extension {
 				break;
 		}
 
-		params.put( "percent", 0.8 );
+		if ( element != null ) {
+			params.put( "element", element.getId( ) );
+		}
 
-		driver.executeScript( "mobile: scrollGesture", params );
+		driver.executeScript( "mobile: scroll", params );
 	}
 
 	public static void scroll ( DIRECTION direction ) {
@@ -117,46 +91,39 @@ public class UiAutomator2Extension {
 
 	/*
 	Function to scroll to an element.
-	 */
-	public static RemoteWebElement scrollTo ( By logator, int maxScrolls ) {
+	*/
+	public static RemoteWebElement scrollTo ( By locator, int maxScrolls ) {
 		int counter = 0;
 		boolean nextScroll = true;
 		Map< String, Object > params = new HashMap<>( );
-
-		Dimension size = driver.manage( ).window( ).getSize( );
-		int width = size.getWidth( );
-		int height = size.getHeight( );
-		int left = ( int ) ( width * 0.1 );
-		int top = ( int ) ( height * 0.1 );
-
-		params.put( "left", left );
-		params.put( "top", top );
-		params.put( "width", width );
-		params.put( "height", height );
+		RemoteWebElement element = ( RemoteWebElement ) wait.until( ExpectedConditions.presenceOfElementLocated( locator ) );
 
 		do {
-			try {
-				return ( RemoteWebElement ) driver.findElement( logator );
-			} catch ( NoSuchElementException e ) {
+			if ( element.isDisplayed( ) ) {
+				nextScroll = false;
+				break;
+			} else {
 				params.put( "direction", "up" );
-				params.put( "percent", 0.8 );
-				driver.executeScript( "mobile: scrollGesture", params );
+				params.put( "velocity", 1000 );
+				driver.executeScript( "mobile: swipe", params );
 			}
 			counter++;
 		} while ( counter < maxScrolls );
 
-		do {
-			try {
-				return ( RemoteWebElement ) driver.findElement( logator );
-			} catch ( NoSuchElementException e ) {
-				params.put( "direction", "down" );
-				params.put( "percent", 0.8 );
-				driver.executeScript( "mobile: scrollGesture", params );
-			}
-			counter--;
-		} while ( counter > 0 );
+		if ( nextScroll ) {
+			do {
+				if ( element.isDisplayed( ) ) {
+					break;
+				} else {
+					params.put( "direction", "down" );
+					params.put( "velocity", 1000 );
+					driver.executeScript( "mobile: swipe", params );
+				}
+				counter--;
+			} while ( counter > 0 );
+		}
 
-		return null;
+		return element;
 	}
 
 	public static RemoteWebElement scrollTo ( By locator ) {

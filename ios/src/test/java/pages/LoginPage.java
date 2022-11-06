@@ -1,7 +1,7 @@
 package pages;
 
 import helpers.OCRHelper;
-import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -14,31 +14,31 @@ public class LoginPage extends BasePage {
 
 	private final Logger logger = LogManager.getLogger( );
 
-	@AndroidFindBy( uiAutomator = scrollDescriptionMatches + "test-Username" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "test-Usuario" )
 	private RemoteWebElement usernameInput;
 
-	@AndroidFindBy( uiAutomator = scrollDescriptionContains + "password" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "test-Contraseña" )
 	private RemoteWebElement passwordInput;
 
-	@AndroidFindBy( uiAutomator = scrollDescription + "test-LOGIN" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "test-LOGIN" )
 	private RemoteWebElement loginButton;
 
-	@AndroidFindBy( uiAutomator = scrollTextMatches + "standard_user" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "test-standard_user" )
 	private RemoteWebElement standardUserLabel;
 
-	@AndroidFindBy( uiAutomator = scrollTextMatches + "locked_out_user" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "test-locked_out_user" )
 	private RemoteWebElement lockedOutUserLabel;
 
-	@AndroidFindBy( uiAutomator = scrollTextMatches + "problem_user" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "test-problem_user" )
 	private RemoteWebElement problemUserLabel;
 
-	@AndroidFindBy( uiAutomator = scrollTextMatches + "Username is required" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "Usuario es requerido" )
 	private RemoteWebElement usernameIsRequiredLabel;
 
-	@AndroidFindBy( uiAutomator = scrollTextMatches + "Password is required" + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "Contraseña es requerida" )
 	private RemoteWebElement passwordIsRequiredLabel;
 
-	@AndroidFindBy( uiAutomator = scrollTextContains + "Sorry, this user has been locked out." + scrollWrapper )
+	@iOSXCUITFindBy( accessibility = "Lo sentimos, este usuario ha sido bloqueado." )
 	private RemoteWebElement sorryUserLockedOutLabel;
 
 	/*
@@ -48,7 +48,7 @@ public class LoginPage extends BasePage {
 		usernameInput.click( );
 		usernameInput.clear( );
 		usernameInput.sendKeys( username );
-		driver.hideKeyboard( );
+		returnButton.click( );
 		logger.info( "Fill the 'USERNAME' input with the value '" + username + "'" );
 	}
 
@@ -56,7 +56,7 @@ public class LoginPage extends BasePage {
 		passwordInput.click( );
 		passwordInput.clear( );
 		passwordInput.sendKeys( password );
-		driver.hideKeyboard( );
+		returnButton.click( );
 		logger.info( "Fill the 'PASSWORD' input with the value '" + password + "'" );
 	}
 
@@ -122,7 +122,7 @@ public class LoginPage extends BasePage {
 	}
 
 	public void validateSwagLabsImage ( ) {
-		RemoteWebElement element = scrollTo( By.xpath( "//android.widget.EditText[@content-desc=\"test-Username\"]/parent::android.view.ViewGroup/preceding-sibling::android.widget.ImageView" ) );
+		RemoteWebElement element = ( RemoteWebElement ) driver.findElement( By.xpath( "//XCUIElementTypeOther[@name=\"Usuario Contraseña LOGIN\"]/XCUIElementTypeOther[1]/XCUIElementTypeImage" ) );
 		String swagLabsTitle = OCRHelper.getStringFromImageElement( element );
 		assertNotNull( swagLabsTitle );
 		assertTrue( swagLabsTitle.contains( "SWAGLABS" ), "The 'SWAGLABS' title is not displayed" );
