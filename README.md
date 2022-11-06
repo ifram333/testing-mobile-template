@@ -85,8 +85,10 @@ testing-mobile-template
 |     |	| │ XCUITestExtension.java
 |     |	└─helpers
 |     |	| │ OCRHelper.java
+|     |	| │ AllureHelper.java
 |     |	└─readers
 |     |	| │ AppiumJsonReader.java
+|     |	| │ PropertiesReader.java
 |     └─resources
 |       │ appium.json
 |       │ cucumber.properties
@@ -140,25 +142,36 @@ Multiple servers can be stored, the user have to define which server will be exe
     "config": "config1",
     "ip": "0.0.0.0",
     "port": 4723,
-    "device": "androidReal12",
-    "app": "androidAppName"
+    "device": "android-real",
+    "app": "androidAppName",
+    "device-name": "Samsung Galaxy S10",
+    "device-os": "Android",
+    "device-os-version": "12"
   },
   {
     "config": "config2",
     "ip": "0.0.0.0",
     "port": 4725,
-    "device": "iosSim15",
-    "app": "iOSAppName"
+    "device": "ios-simulator",
+    "app": "iOSAppName",
+    "device-name": "Google Pixel 4",
+    "device-os": "Android",
+    "device-os-version": "10"
   },
   {
     "config": "config1",
     "ip": "0.0.0.0",
     "port": -1,
-    "device": "androidSim8",
-    "app": "secondAndroidApp"
+    "device": "ios-simulator",
+    "app": "secondAndroidApp",
+    "device-name": "iPhone 14",
+    "device-os": "iOS",
+    "device-os-version": "16.1"
   }
 ]
 ```
+
+> The **device-name**, **device-os** and **device-os-version** are information required for the allure report.
 
 The **apps** section contains the name of the apps that will be tested with the project, these apps are stored in the **
 /resources/apps** folder of their respective module. These apps are identified with a nickname.
@@ -180,22 +193,22 @@ identified with a nickname.
 
 ```json
 "capabilities": {
-    "iosSim15": {
-    "platformVersion": "15.4",
-    "deviceName": "iPhone 13"
+  "ios-simulator": {
+    "platformVersion": "16.1",
+    "deviceName": "iPhone 14"
   },
-  "iosReal15": {
+  "ios-real": {
     "platformVersion": "15.4",
-    "deviceName": "iPhone",
+    "deviceName": "iPhone XS Max",
     "udid": "XXXXXXXX-XXXXXXXXXXXXXXXX",
     "xcodeOrgId": "XXXXXXXXXX",
     "xcodeSigningId": "iPhone Developer"
   },
-   "androidSim8": {
+   "android-simulator": {
     "appium:avd": "Android_8",
     "appium:deviceName": "Android_8"
   },
-  "androidReal12": {
+  "android-real": {
     "appium:deviceName": "XXXXXXXXX"
   }
 }
