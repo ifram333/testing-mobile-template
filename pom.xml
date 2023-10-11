@@ -16,31 +16,38 @@
     </modules>
 
     <properties>
+        <!-- Project Configuration -->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Plugins Version -->
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
-        <maven.clean.plugin.version>3.2.0</maven.clean.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M7</maven.surefire.plugin.version>
         <maven.properties.plugin.version>1.1.0</maven.properties.plugin.version>
         <allure.maven.version>2.11.2</allure.maven.version>
 
         <!-- Dependencies Version -->
-        <cucumber.java.version>7.8.1</cucumber.java.version>
-        <cucumber.testng.version>7.8.1</cucumber.testng.version>
-        <cucumber.gherkin.version>24.1.0</cucumber.gherkin.version>
-        <testng.version>7.6.1</testng.version>
-        <appium.java.client.version>8.2.0</appium.java.client.version>
-        <selenium.version>4.5.0</selenium.version>
-        <log4j.core.version>2.19.0</log4j.core.version>
-        <log4j.api.version>2.19.0</log4j.api.version>
-        <slf4j.api.version>2.0.3</slf4j.api.version>
-        <slf4j.simple.version>2.0.3</slf4j.simple.version>
-        <allure.cucumber.jvm.version>2.19.0</allure.cucumber.jvm.version>
+        <cucumber.java.version>7.12.0</cucumber.java.version>
+        <cucumber.testng.version>7.12.0</cucumber.testng.version>
+        <cucumber.gherkin.version>26.2.0</cucumber.gherkin.version>
+        <testng.version>7.7.1</testng.version>
+        <appium.java.client.version>8.4.0</appium.java.client.version>
+        <selenium.support.version>4.9.0</selenium.support.version>
         <guava.version>31.1-jre</guava.version>
-        <json.version>20220924</json.version>
+        <json.version>20230227</json.version>
+        <log4j.core.version>2.20.0</log4j.core.version>
+        <log4j.api.version>2.20.0</log4j.api.version>
+        <rest.assured.version>5.3.0</rest.assured.version>
+        <rest.assured.json.path.version>5.3.0</rest.assured.json.path.version>
+        <rest.assured.xml.path.version>5.3.0</rest.assured.xml.path.version>
+        <rest.assured.json.scheme.validator.version>5.3.0</rest.assured.json.scheme.validator.version>
+        <slf4j.api.version>2.0.7</slf4j.api.version>
+        <slf4j.simple.version>2.0.7</slf4j.simple.version>
+        <allure.cucumber.jvm.version>2.22.0</allure.cucumber.jvm.version>
+        <aspectj.version>1.9.19</aspectj.version>
+        <owner.version>1.0.12</owner.version>
+        <assertj.version>3.24.2</assertj.version>
         <tess4j.version>5.4.0</tess4j.version>
         <jodaTime.version>2.12.1</jodaTime.version>
     </properties>
@@ -104,17 +111,29 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>${selenium.version}</version>
+            <version>${selenium.support.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
-            <version>${selenium.version}</version>
+            <version>${selenium.support.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-remote-driver</artifactId>
-            <version>${selenium.version}</version>
+            <version>${selenium.support.version}</version>
+        </dependency>
+
+        <!-- Miscellaneous Java Functionalities dependencies -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
         </dependency>
 
         <!-- Log4j dependencies -->
@@ -127,6 +146,28 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.api.version}</version>
+        </dependency>
+
+        <!-- Rest Assured dependencies -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest.assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${rest.assured.json.path.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>xml-path</artifactId>
+            <version>${rest.assured.xml.path.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${rest.assured.json.scheme.validator.version}</version>
         </dependency>
 
         <!-- SLF4J dependency -->
@@ -148,16 +189,26 @@
             <version>${allure.cucumber.jvm.version}</version>
         </dependency>
 
-        <!-- Miscellaneous Java Functionalities dependencies -->
+        <!-- Aspectj dependencies -->
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>runtime</scope>
         </dependency>
+
+        <!-- Owner dependencies -->
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>${json.version}</version>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>${owner.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Tesseracts dependencies -->

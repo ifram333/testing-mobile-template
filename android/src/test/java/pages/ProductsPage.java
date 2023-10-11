@@ -1,5 +1,6 @@
 package pages;
 
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,10 @@ public class ProductsPage extends BasePage {
 
 	@AndroidFindBy( uiAutomator = noScrollText + "PRODUCTS" + noScrollWrapper )
 	private RemoteWebElement productsLabel;
+
+	public ProductsPage ( AndroidDriver driver ) {
+		super( driver );
+	}
 
 	public void validateProductsLabel ( ) {
 		assertTrue( productsLabel.isDisplayed( ), "The 'PRODUCTS' label is not displayed" );

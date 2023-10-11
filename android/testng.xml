@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Product Test Suite" verbose="1" parallel="tests" thread-count="1" configfailurepolicy="continue">
-    <test name="Product Acceptance Tests Android" annotations="JDK">
+    <listeners>
+        <listener class-name="listeners.ExecutionListener"/>
+    </listeners>
+
+    <parameter name="allure-folder" value="allure"/>
+
+    <test name="Product Acceptance Tests Android - MF" annotations="JDK">
+        <parameter name="device" value="google-pixel-7-android-13-mf"/>
+        <parameter name="device-name" value="Google Pixel 7"/>
+        <parameter name="device-os" value="Android"/>
+        <parameter name="device-os-version" value="13"/>
+        <parameter name="app-name" value="Android-MyDemoAppRN.1.3.0.build-244.apk"/>
+        <parameter name="data-pool" value="user1.properties"/>
         <classes>
             <class name="AndroidRunnerTest"/>
         </classes>

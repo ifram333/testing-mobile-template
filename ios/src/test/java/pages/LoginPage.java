@@ -1,6 +1,7 @@
 package pages;
 
 import helpers.OCRHelper;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,6 +41,10 @@ public class LoginPage extends BasePage {
 
 	@iOSXCUITFindBy( accessibility = "Lo sentimos, este usuario ha sido bloqueado." )
 	private RemoteWebElement sorryUserLockedOutLabel;
+
+	public LoginPage ( IOSDriver driver ) {
+		super( driver );
+	}
 
 	/*
 	Fill input functionalities

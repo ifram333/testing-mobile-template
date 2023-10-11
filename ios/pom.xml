@@ -13,6 +13,9 @@
 
     <properties>
         <suite>testng.xml</suite>
+        <local.config>ivan</local.config>
+        <appium.ip>0.0.0.0</appium.ip>
+        <appium.port>4725</appium.port>
         <allure.results.directory>${project.build.directory}/reports/results</allure.results.directory>
         <allure.report.directory>${project.build.directory}/reports/report</allure.report.directory>
     </properties>
@@ -30,33 +33,17 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>${suite}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <systemPropertyVariables>
                         <allure.results.directory>
                             ${allure.results.directory}
                         </allure.results.directory>
+                        <local.config>${local.config}</local.config>
+                        <appium.ip>${appium.ip}</appium.ip>
+                        <appium.port>${appium.port}</appium.port>
                     </systemPropertyVariables>
-                </configuration>
-            </plugin>
-
-            <!-- Clean Configuration -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>${maven.clean.plugin.version}</version>
-                <configuration>
-                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
-                    <filesets>
-                        <fileset>
-                            <directory>${project.build.directory}</directory>
-                            <includes>
-                                <include>**</include>
-                            </includes>
-                            <excludes>
-                                <exclude>reports/**</exclude>
-                                <exclude>rerun.txt</exclude>
-                            </excludes>
-                        </fileset>
-                    </filesets>
                 </configuration>
             </plugin>
 

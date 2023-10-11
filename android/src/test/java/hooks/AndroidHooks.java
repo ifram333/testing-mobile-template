@@ -18,37 +18,12 @@ import java.util.UUID;
 
 public class AndroidHooks {
 
-	@Before( value = "@Android", order = 1 )
-	public void setUpDriver ( ) throws MalformedURLException, URISyntaxException {
-		/*
-		Get the server index sent in the maven run command.
-		 */
-		int serverIndex = Integer.parseInt( System.getProperty( "server" ) );
-
-		/*
-		Start Android Driver.
-		 */
-		AndroidAppDriver.startDriver( AppiumServer.getURL( ), serverIndex );
-
-		/*
-		Set Up Extensions.
-		 */
-		UiAutomator2Extension.setDriver( AndroidAppDriver.androidDriver );
-	}
-
 	@After( "@Android" )
-	public void tearDownDriver ( Scenario scenario ) {
-		/*
-		Take a screenshot after executing test cases
-		 */
+	public void takeScreenshotIfFailure ( Scenario scenario ) {
 		if ( scenario.isFailed( ) ) {
-			Allure.addAttachment( UUID.randomUUID( ).toString( ), new ByteArrayInputStream( ( ( TakesScreenshot ) AndroidAppDriver.androidDriver ).getScreenshotAs( OutputType.BYTES ) ) );
+			Allure.addAttachment( "Page screenshot", new ByteArrayInputStream( ( ( TakesScreenshot ) AndroidAppDriver.getDriver( ) ).getScreenshotAs( OutputType.BYTES ) ) );
+			Allure.addAttachment( "Step", scenario.getName( ) + " : failed and screenshot taken" );
 		}
-
-		/*
-		Stop Android Driver.
-		 */
-		AndroidAppDriver.stopDriver( );
 	}
 
 	@Before( value = "@Skip", order = 0 )

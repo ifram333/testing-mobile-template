@@ -1,6 +1,8 @@
 package pages;
 
+import extensions.UiAutomator2Extension;
 import helpers.OCRHelper;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,6 +42,10 @@ public class LoginPage extends BasePage {
 
 	@AndroidFindBy( uiAutomator = scrollTextContains + "Sorry, this user has been locked out." + scrollWrapper )
 	private RemoteWebElement sorryUserLockedOutLabel;
+
+	public LoginPage ( AndroidDriver driver ) {
+		super( driver );
+	}
 
 	/*
 	Fill input functionalities
@@ -122,7 +128,7 @@ public class LoginPage extends BasePage {
 	}
 
 	public void validateSwagLabsImage ( ) {
-		RemoteWebElement element = scrollTo( By.xpath( "//android.widget.EditText[@content-desc=\"test-Username\"]/parent::android.view.ViewGroup/preceding-sibling::android.widget.ImageView" ) );
+		RemoteWebElement element = UiAutomator2Extension.scrollTo( By.xpath( "//android.widget.EditText[@content-desc=\"test-Username\"]/parent::android.view.ViewGroup/preceding-sibling::android.widget.ImageView" ) );
 		String swagLabsTitle = OCRHelper.getStringFromImageElement( element );
 		assertNotNull( swagLabsTitle );
 		assertTrue( swagLabsTitle.contains( "SWAGLABS" ), "The 'SWAGLABS' title is not displayed" );

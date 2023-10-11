@@ -1,5 +1,6 @@
 package pages;
 
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,10 @@ public class ProductsPage extends BasePage {
 
 	@iOSXCUITFindBy( xpath = "//XCUIElementTypeStaticText[@name=\"PRODUCTOS\"]" )
 	private RemoteWebElement productsLabel;
+
+	public ProductsPage ( IOSDriver driver ) {
+		super( driver );
+	}
 
 	public void validateProductsLabel ( ) {
 		assertTrue( productsLabel.isDisplayed( ), "The 'PRODUCTS' label is not displayed" );

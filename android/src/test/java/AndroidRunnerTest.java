@@ -1,14 +1,23 @@
 import appium.AppiumServer;
 import com.google.common.collect.ImmutableMap;
+import drivers.AndroidAppDriver;
+import extensions.UiAutomator2Extension;
+import helpers.DataPoolLoader;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.options.UiAutomator2Options;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import readers.AppiumJsonReader;
+import org.apache.commons.io.FileUtils;
+import org.testng.annotations.*;
+import readers.ConfigJsonReader;
 import readers.PropertiesReader;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Objects;
 
 import static helpers.AllureHelper.allureEnvironmentWriter;
 
@@ -26,53 +35,100 @@ hooks and steps, and where the appium server is initialized and terminated.
 		} )
 public class AndroidRunnerTest extends AbstractTestNGCucumberTests {
 
-	@BeforeSuite
-	public void setAllureEnvironmentVariables ( ) throws IOException {
-		/*
-		Get the server index sent in the maven run command.
-		 */
-		int serverIndex = Integer.parseInt( System.getProperty( "server" ) );
+	private String path = "";
 
-		/*
-		Load appium information from appium.json file.
-		 */
-		AppiumJsonReader.getInstance( );
-
+	@BeforeTest
+	@Parameters( { "allure-folder", "data-pool" } )
+	public void setUpAppium ( String allureFolder, String dataPool ) throws IOException {
 		/*
 		Get the allure results directory
 		 */
-		String allureResultsDirectory = new PropertiesReader( "pom.properties" ).getProperty( "allure.results.directory" );
+		path = new PropertiesReader( "pom.properties" ).getProperty( "allure.results.directory" );
+		String allureResultsDirectory = path + "/" + allureFolder;
+
+		/*
+		Set the allure results directory depending on the device
+		 */
+		System.setProperty( "allure.results.directory", allureResultsDirectory );
+
+		/*
+		Initializing the data pool loader with the properties file set in the xml parameters
+		 */
+		DataPoolLoader.loadData( dataPool );
+	}
+
+	@AfterTest
+	@Parameters( { "allure-folder", "device-name", "device-os", "device-os-version", "app-name" } )
+	public void tearDownAppium ( String allureFolder, String deviceName, String deviceOS, String deviceOSVersion, String appName ) {
+		/*
+		Move all files to its corresponding results folder
+		 */
+		File dir = new File( path + "/" + allureFolder );
+		File resultDir = new File( path + "/" + deviceOS + "_" + deviceOSVersion );
+
+		try {
+			for ( File file :
+					Objects.requireNonNull( dir.listFiles( ) ) ) {
+				FileUtils.moveFileToDirectory( file, resultDir, true );
+			}
+
+			FileUtils.deleteDirectory( dir );
+		} catch ( IOException e ) {
+			System.out.println( "It was impossible to create results folder..." );
+			e.printStackTrace( );
+		}
 
 		/*
 		Create the environment file for the allure report
 		 */
 		allureEnvironmentWriter(
 				ImmutableMap.< String, String >builder( )
-						.put( "Device", AppiumJsonReader.getDeviceName( serverIndex ) )
-						.put( "OS", AppiumJsonReader.getDeviceOS( serverIndex ) )
-						.put( "OS.Version", AppiumJsonReader.getDeviceOSVersion( serverIndex ) )
-						.put( "App", AppiumJsonReader.getAppName( serverIndex ) )
-						.build( ), allureResultsDirectory );
+						.put( "Device", deviceName )
+						.put( "OS", deviceOS )
+						.put( "OS.Version", deviceOSVersion )
+						.put( "App", appName )
+						.build( ), resultDir.getAbsolutePath( ) );
 	}
 
-	@BeforeTest
-	public void setUpAppium ( ) {
+	@BeforeMethod
+	@Parameters( { "device", "app-name" } )
+	public void setUpDriver ( String device, String appName ) throws MalformedURLException, URISyntaxException {
 		/*
-		Get the server index sent in the maven run command.
+		Load the path to the .app file.
 		 */
-		int serverIndex = Integer.parseInt( System.getProperty( "server" ) );
+		File app = new File( Objects.requireNonNull( this.getClass( ).getResource( "apps/" + appName ) ).toURI( ) );
 
 		/*
-		Start APPIUM Server.
+		Validate the app is in the resources/apps folder.
 		 */
-		AppiumServer.start( serverIndex );
+		if ( !app.exists( ) ) {
+			System.out.println( app.getName( ) + " not found in the 'resource/apps' folder..." );
+			return;
+		}
+
+		/*
+			Load the capabilities required to run the execution.
+		 */
+		UiAutomator2Options uiAutomator2Options = new UiAutomator2Options( ConfigJsonReader.getCapabilities( device ) );
+		uiAutomator2Options.setApp( app.getAbsolutePath( ) );
+
+		/*
+		Start Android Driver.
+		 */
+		AndroidAppDriver.startDriver( new AndroidDriver( new URL( AppiumServer.getURL( ) ), uiAutomator2Options ) );
+
+		/*
+		Set Up Extensions.
+		 */
+		UiAutomator2Extension.setDriver( AndroidAppDriver.getDriver( ) );
 	}
 
-	@AfterTest
-	public void tearDownAppium ( ) {
+	@AfterMethod
+	public synchronized void tearDownDriver ( ) {
 		/*
-		Stop APPIUM Server
+		Stop Android Driver.
 		 */
-		if ( AppiumServer.isRunning( ) ) AppiumServer.stop( );
+		AndroidAppDriver.getDriver( ).quit( );
 	}
+
 }

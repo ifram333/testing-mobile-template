@@ -1,28 +1,31 @@
 package pages;
 
-import drivers.AndroidAppDriver;
-import extensions.UiAutomator2Extension;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.RemoteWebElement;
+
+import java.time.Duration;
+import java.util.Collections;
+import java.util.Objects;
 
 /*
 This is the base class that all pages extend from.
  */
-public class BasePage extends Page {
+public class BasePage {
 
-	/*
-	Get an instance of the Android driver
-	 */
-	protected final AndroidDriver driver = AndroidAppDriver.androidDriver;
+	protected final AndroidDriver driver;
 
 	/*
 	UiSelectors locators scrollable
 	 */
 	protected final String scrollId = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId(\"";
-	protected final String scrollIdMatches = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceIdMatches(\"(?i)";
+	protected final String scrollIdMatches = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceIdMatches(\"(?i).*";
 
 	protected final String scrollText = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"";
 	protected final String scrollTextContains = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().textContains(\"";
@@ -43,7 +46,7 @@ public class BasePage extends Page {
 	UiSelectors locators non scrollable
 	 */
 	protected final String noScrollId = "new UiSelector().resourceId(\"";
-	protected final String noScrollIdMatches = "new UiSelector().resourceIdMatches(\"(?i)";
+	protected final String noScrollIdMatches = "new UiSelector().resourceIdMatches(\"(?i).*";
 
 	protected final String noScrollText = "new UiSelector().text(\"";
 	protected final String noScrollTextContains = "new UiSelector().textContains(\"";
@@ -60,16 +63,52 @@ public class BasePage extends Page {
 
 	protected final String noScrollWrapper = "\")";
 
-	/*
-	Get an instance of the logger
-	 */
-	private final Logger logger = LogManager.getLogger( );
+	protected final Logger logger = LogManager.getLogger( this.getClass( ) );
+	protected final SoftAssertions softly = new SoftAssertions( );
 
-	/*
-	Functions to get element
-	 */
-	protected RemoteWebElement scrollTo ( By locator ) {
-		return UiAutomator2Extension.scrollTo( locator );
+	public BasePage ( AndroidDriver driver ) {
+		this.driver = driver;
+	}
+
+	protected void clickValueAutoCompleteTextView ( RemoteWebElement autoCompleteTextView, String value ) {
+		autoCompleteTextView.click( );
+		autoCompleteTextView.clear( );
+		autoCompleteTextView.sendKeys( value );
+
+		Rectangle autoCompleteTextViewRectangle = autoCompleteTextView.getRect( );
+		PointerInput FINGER = new PointerInput( PointerInput.Kind.TOUCH, "finger" );
+
+		Sequence action;
+
+		action = new Sequence( FINGER, 1 )
+				.addAction( FINGER.createPointerMove( Duration.ofMillis( 0 ), PointerInput.Origin.viewport( ), autoCompleteTextViewRectangle.getX( ) + 10, autoCompleteTextViewRectangle.getY( ) + autoCompleteTextViewRectangle.getHeight( ) + 10 ) )
+				.addAction( FINGER.createPointerDown( PointerInput.MouseButton.LEFT.asArg( ) ) )
+				.addAction( FINGER.createPointerUp( PointerInput.MouseButton.LEFT.asArg( ) ) );
+
+		driver.perform( Collections.singletonList( action ) );
+	}
+
+	protected void clickElement ( RemoteWebElement element, int x, int y ) {
+		Point point = Objects.nonNull( element ) ? element.getLocation( ) : new Point( 0, 0 );
+		Point finalPoint = point.moveBy( x, y );
+		PointerInput FINGER = new PointerInput( PointerInput.Kind.TOUCH, "finger" );
+
+		Sequence action;
+
+		action = new Sequence( FINGER, 1 )
+				.addAction( FINGER.createPointerMove( Duration.ofMillis( 0 ), PointerInput.Origin.viewport( ), finalPoint.getX( ), finalPoint.getY( ) ) )
+				.addAction( FINGER.createPointerDown( PointerInput.MouseButton.LEFT.asArg( ) ) )
+				.addAction( FINGER.createPointerUp( PointerInput.MouseButton.LEFT.asArg( ) ) );
+
+		driver.perform( Collections.singletonList( action ) );
+	}
+
+	protected void clickElement ( RemoteWebElement element ) {
+		clickElement( element, 0, 0 );
+	}
+
+	protected void clickElement ( int x, int y ) {
+		clickElement( null, x, y );
 	}
 
 }

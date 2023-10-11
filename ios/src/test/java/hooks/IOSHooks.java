@@ -17,32 +17,12 @@ import java.util.UUID;
 
 public class IOSHooks {
 
-	@Before( value = "@iOS", order = 1 )
-	public void setUpDriver ( ) throws MalformedURLException, URISyntaxException {
-		/*
-		Get the server index sent in the maven run command.
-		 */
-		int serverIndex = Integer.parseInt( System.getProperty( "server" ) );
-
-		/*
-		Start iOS Driver.
-		 */
-		IOSAppDriver.startDriver( AppiumServer.getURL( ), serverIndex );
-	}
-
 	@After( "@iOS" )
-	public void tearDownDriver ( Scenario scenario ) {
-		/*
-		Take a screenshot after executing test cases
-		 */
+	public void takeScreenshotIfFailure ( Scenario scenario ) {
 		if ( scenario.isFailed( ) ) {
-			Allure.addAttachment( UUID.randomUUID( ).toString( ), new ByteArrayInputStream( ( ( TakesScreenshot ) IOSAppDriver.iosDriver ).getScreenshotAs( OutputType.BYTES ) ) );
+			Allure.addAttachment( "Page screenshot", new ByteArrayInputStream( ( ( TakesScreenshot ) IOSAppDriver.getDriver( ) ).getScreenshotAs( OutputType.BYTES ) ) );
+			Allure.addAttachment( "Step", scenario.getName( ) + " : failed and screenshot taken" );
 		}
-
-		/*
-		Stop iOS Driver.
-		 */
-		IOSAppDriver.stopDriver( );
 	}
 
 	@Before( value = "@Skip", order = 0 )

@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Product Test Suite" verbose="1" parallel="tests" thread-count="1" configfailurepolicy="continue">
-    <test name="Product Acceptance Tests iOS" annotations="JDK">
+    <listeners>
+        <listener class-name="listeners.ExecutionListener"/>
+    </listeners>
+
+    <parameter name="allure-folder" value="allure"/>
+
+    <test name="Product Acceptance Tests iOS - MF" annotations="JDK">
+        <parameter name="device" value="iphone-xs-max-ios-16-6"/>
+        <parameter name="device-name" value="iPhone XS Max"/>
+        <parameter name="device-os" value="iOS"/>
+        <parameter name="device-os-version" value="16.6"/>
+        <parameter name="app-name" value="iOS-Real-Device-MyRNDemoApp.1.3.0-162.ipa"/>
+        <parameter name="data-pool" value="user3.properties"/>
         <classes>
             <class name="IOSRunnerTest"/>
         </classes>
