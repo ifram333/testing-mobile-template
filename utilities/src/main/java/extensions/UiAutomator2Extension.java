@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -216,6 +217,10 @@ public class UiAutomator2Extension {
 		} while ( retries > 0 );
 
 		throw new NoSuchElementException( "No element found" );
+	}
+
+	public static void WaitForElementVisibility ( By locator ) {
+		wait.until( ExpectedConditions.visibilityOfElementLocated( locator ) );
 	}
 
 	public enum DIRECTION {

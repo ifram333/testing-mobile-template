@@ -33,9 +33,14 @@
       "deviceName": "iPhone 14",
       "wdaLocalPort": "8101"
     },
-    "google-pixel-7-android-13-mf": {
+    "google-pixel-7-android-13": {
       "appium:deviceName": "35111FDH20053N",
       "systemPort": "8200"
+    },
+    "sim-google-pixel-6-pro-android-13": {
+      "appium:avd": "Pixel_6_Pro_API_33",
+      "appium:deviceName": "Pixel 6 Pro API 33",
+      "systemPort": "8201"
     }
   }
 }

@@ -2,7 +2,6 @@ import appium.AppiumServer;
 import com.google.common.collect.ImmutableMap;
 import drivers.AndroidAppDriver;
 import extensions.UiAutomator2Extension;
-import helpers.DataPoolLoader;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
@@ -38,8 +37,8 @@ public class AndroidRunnerTest extends AbstractTestNGCucumberTests {
 	private String path = "";
 
 	@BeforeTest
-	@Parameters( { "allure-folder", "data-pool" } )
-	public void setUpAppium ( String allureFolder, String dataPool ) throws IOException {
+	@Parameters( { "allure-folder" } )
+	public void setUpAppium ( String allureFolder ) throws IOException {
 		/*
 		Get the allure results directory
 		 */
@@ -50,11 +49,6 @@ public class AndroidRunnerTest extends AbstractTestNGCucumberTests {
 		Set the allure results directory depending on the device
 		 */
 		System.setProperty( "allure.results.directory", allureResultsDirectory );
-
-		/*
-		Initializing the data pool loader with the properties file set in the xml parameters
-		 */
-		DataPoolLoader.loadData( dataPool );
 	}
 
 	@AfterTest
@@ -64,7 +58,7 @@ public class AndroidRunnerTest extends AbstractTestNGCucumberTests {
 		Move all files to its corresponding results folder
 		 */
 		File dir = new File( path + "/" + allureFolder );
-		File resultDir = new File( path + "/" + deviceOS + "_" + deviceOSVersion );
+		File resultDir = new File( path + "/" + deviceName.replaceAll( " ", "_" ) + "_" + deviceOS + "_" + deviceOSVersion );
 
 		try {
 			for ( File file :
@@ -107,7 +101,7 @@ public class AndroidRunnerTest extends AbstractTestNGCucumberTests {
 		}
 
 		/*
-			Load the capabilities required to run the execution.
+		Load the capabilities required to run the execution.
 		 */
 		UiAutomator2Options uiAutomator2Options = new UiAutomator2Options( ConfigJsonReader.getCapabilities( device ) );
 		uiAutomator2Options.setApp( app.getAbsolutePath( ) );

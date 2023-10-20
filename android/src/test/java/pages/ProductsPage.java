@@ -1,27 +1,26 @@
 package pages;
 
+import extensions.UiAutomator2Extension;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.remote.RemoteWebElement;
-
-import static org.testng.Assert.assertTrue;
 
 public class ProductsPage extends BasePage {
 
-	private final Logger logger = LogManager.getLogger( );
-
-	@AndroidFindBy( uiAutomator = noScrollText + "PRODUCTS" + noScrollWrapper )
-	private RemoteWebElement productsLabel;
+	@AndroidFindBy( xpath = "//android.view.ViewGroup[@content-desc=\"container header\"]/android.widget.TextView" )
+	private RemoteWebElement lblProducts;
 
 	public ProductsPage ( AndroidDriver driver ) {
 		super( driver );
 	}
 
-	public void validateProductsLabel ( ) {
-		assertTrue( productsLabel.isDisplayed( ), "The 'PRODUCTS' label is not displayed" );
-		logger.info( "The 'PRODUCTS' label is displayed" );
+	public void validatePage ( ) {
+		UiAutomator2Extension.WaitForElementVisibility( AppiumBy.xpath( "//android.view.ViewGroup[@content-desc=\"container header\"]/android.widget.TextView" ) );
+		softly.assertThat( lblProducts.isDisplayed( ) ).isTrue( );
+		softly.assertThat( lblProducts.getText( ) ).isEqualTo( "Products" );
+		softly.assertAll( );
+		logger.info( "The Products page is loaded correctly" );
 	}
 
 }

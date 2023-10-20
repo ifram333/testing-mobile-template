@@ -8,12 +8,11 @@
     <parameter name="allure-folder" value="allure"/>
 
     <test name="Product Acceptance Tests Android - MF" annotations="JDK">
-        <parameter name="device" value="google-pixel-7-android-13-mf"/>
+        <parameter name="device" value="google-pixel-7-android-13"/>
         <parameter name="device-name" value="Google Pixel 7"/>
         <parameter name="device-os" value="Android"/>
         <parameter name="device-os-version" value="13"/>
         <parameter name="app-name" value="Android-MyDemoAppRN.1.3.0.build-244.apk"/>
-        <parameter name="data-pool" value="user1.properties"/>
         <classes>
             <class name="FailedScenariosRunnerTest"/>
         </classes>
