@@ -1,6 +1,7 @@
 package steps;
 
 import io.cucumber.java.en.Given;
+import pages.LogInPage;
 
 import java.io.IOException;
 
@@ -27,6 +28,14 @@ public class CompoundSteps extends BaseSteps {
 			default:
 				break;
 		}
+	}
+
+	@Given( "I log in to the app with username {string} and password {string}" )
+	public void i_log_in_to_the_app_with_username_and_password ( String username, String password ) {
+		instanceOf( LogInPage.class ).validatePage( );
+		instanceOf( LogInPage.class ).sendKeysUsernameInput( username );
+		instanceOf( LogInPage.class ).sendKeysPasswordInput( password );
+		instanceOf( LogInPage.class ).clickLoginButton( );
 	}
 
 }

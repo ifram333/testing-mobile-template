@@ -2,8 +2,9 @@ package steps;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import pages.CheckoutAddressPage;
+import pages.CheckoutPaymentPage;
 import pages.LogInPage;
-import pages.ProductsPage;
 
 /*
 This class contains all the steps that are only validations
@@ -30,9 +31,31 @@ public class ValidationSteps extends BaseSteps {
 		instanceOf( LogInPage.class ).validatePasswordErrorMessage( );
 	}
 
-	@Then( "The Products screen is displayed" )
-	public void the_products_screen_is_displayed ( ) {
-		instanceOf( ProductsPage.class ).validatePage( );
+	@Then( "The Checkout Shipping Address screen is displayed" )
+	public void the_checkout_shipping_address_screen_is_displayed ( ) {
+		instanceOf( CheckoutAddressPage.class ).validatePage( );
+	}
+
+	@Then( "The checkout shipping address error messages are displayed" )
+	public void the_checkout_shipping_address_error_messages_are_displayed ( ) {
+		instanceOf( CheckoutAddressPage.class ).validateFullNameErrorMessage( );
+		instanceOf( CheckoutAddressPage.class ).validateAddressLine1ErrorMessage( );
+		instanceOf( CheckoutAddressPage.class ).validateCityErrorMessage( );
+		instanceOf( CheckoutAddressPage.class ).validateZipCodeErrorMessage( );
+		instanceOf( CheckoutAddressPage.class ).validateCountryErrorMessage( );
+	}
+
+	@Then( "The Checkout Payment screen is displayed" )
+	public void the_checkout_payment_screen_is_displayed ( ) {
+		instanceOf( CheckoutPaymentPage.class ).validatePage( );
+	}
+
+	@Then( "The checkout payment error messages are displayed" )
+	public void the_checkout_payment_error_messages_are_displayed ( ) {
+		instanceOf( CheckoutPaymentPage.class ).validateFullNameErrorMessage( );
+		instanceOf( CheckoutPaymentPage.class ).validateCardNumberErrorMessage( );
+		instanceOf( CheckoutPaymentPage.class ).validateExpirationDateErrorMessage( );
+		instanceOf( CheckoutPaymentPage.class ).validateSecurityCodeErrorMessage( );
 	}
 
 }
