@@ -13,7 +13,7 @@
 
     <properties>
         <suite>testng.xml</suite>
-        <local.config>ivan</local.config>
+        <local.config>config1</local.config>
         <appium.ip>0.0.0.0</appium.ip>
         <appium.port>4726</appium.port>
         <allure.results.directory>${project.build.directory}/reports/results</allure.results.directory>
