@@ -1,15 +1,15 @@
 {
   "configs": {
-    "ivan": {
-      "android": "/Users/ivanramirez/Library/Android/sdk",
+    "config1": {
+      "android": "/Users/%username%/Library/Android/sdk",
       "java": "/Library/Java/JavaVirtualMachines/graalvm-ce-java11-22.3.0/Contents/Home",
       "node": "/usr/local/bin/node",
       "executable": "/usr/local/bin/appium",
       "ios-deploy": "/usr/local/bin/ios-deploy",
       "log": "target/appium.log"
     },
-    "natalia": {
-      "android": "/Users/nataliamateus/Library/Android/sdk",
+    "config2": {
+      "android": "/Users/%username%/Library/Android/sdk",
       "java": "/Library/Java/JavaVirtualMachines/jdk-11.0.15.1.jdk/Contents/Home",
       "node": "/usr/local/bin/node",
       "executable": "/usr/local/bin/appium",
@@ -21,8 +21,8 @@
     "iphone-xs-max-ios-16-6": {
       "platformVersion": "16.6",
       "deviceName": "iPhone Xs Max",
-      "udid": "00008020-00093C613AB8003A",
-      "xcodeOrgId": "5JZ49M8U7N",
+      "udid": "########-################",
+      "xcodeOrgId": "##############",
       "xcodeSigningId": "iPhone Developer",
       "appInstallStrategy": "ios-deploy",
       "wdaLocalPort": "8100"
@@ -33,7 +33,7 @@
       "wdaLocalPort": "8101"
     },
     "google-pixel-7-android-13": {
-      "appium:deviceName": "35111FDH20053N",
+      "appium:deviceName": "###############",
       "systemPort": "8200"
     },
     "sim-google-pixel-6-pro-android-13": {
