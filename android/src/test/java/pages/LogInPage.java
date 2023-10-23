@@ -76,14 +76,14 @@ public class LogInPage extends BasePage {
 		softly.assertThat( lblUsernameErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblUsernameErrorMessage.getText( ) ).isEqualTo( "Username is required" );
 		softly.assertAll( );
-		logger.info( "The correct username error message (" + lblUsernameErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct username error message (Username is required) is displayed" );
 	}
 
 	public void validatePasswordErrorMessage ( ) {
 		softly.assertThat( lblPasswordErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblPasswordErrorMessage.getText( ) ).isEqualTo( "Password is required" );
 		softly.assertAll( );
-		logger.info( "The correct password error message (" + lblPasswordErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct password error message (Password is required) is displayed" );
 	}
 
 	public void validateErrorMessage ( String message ) {

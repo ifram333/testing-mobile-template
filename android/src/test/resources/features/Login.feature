@@ -28,11 +28,11 @@ Feature: Log in
 
   Scenario: 04. Validate that the username is required
     Given The Login screen is displayed
-    When I click on the Login button
+    When I click the login button
     Then The username is required message is displayed
 
   Scenario: 05. Validate that the password is required
     Given The Login screen is displayed
     When I fill the username "ivan@example.com"
-    And I click on the Login button
+    And I click the login button
     Then The password is required message is displayed

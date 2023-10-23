@@ -28,7 +28,6 @@
       "wdaLocalPort": "8100"
     },
     "sim-iphone-14-ios-16-2": {
-      "platformName": "iOS",
       "platformVersion": "16.2",
       "deviceName": "iPhone 14",
       "wdaLocalPort": "8101"

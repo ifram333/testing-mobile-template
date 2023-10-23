@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 public class CheckoutAddressPage extends BasePage {
 
 	@AndroidFindBy( xpath = "//android.view.ViewGroup[@content-desc=\"container header\"]/android.widget.TextView" )
-	private RemoteWebElement lblProducts;
+	private RemoteWebElement lblCheckout;
 
 	@AndroidFindBy( xpath = "//android.widget.ScrollView[@content-desc=\"checkout address screen\"]/android.view.ViewGroup/android.widget.TextView[1]" )
 	private RemoteWebElement lblEnterAShippingAddress;
@@ -133,8 +133,8 @@ public class CheckoutAddressPage extends BasePage {
 
 	public void validatePage ( ) {
 		UiAutomator2Extension.WaitForElementVisibility( AppiumBy.xpath( "//android.view.ViewGroup[@content-desc=\"container header\"]/android.widget.TextView" ) );
-		softly.assertThat( lblProducts.isDisplayed( ) ).isTrue( );
-		softly.assertThat( lblProducts.getText( ) ).isEqualTo( "Checkout" );
+		softly.assertThat( lblCheckout.isDisplayed( ) ).isTrue( );
+		softly.assertThat( lblCheckout.getText( ) ).isEqualTo( "Checkout" );
 		softly.assertThat( lblEnterAShippingAddress.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblEnterAShippingAddress.getText( ) ).isEqualTo( "Enter a shipping address" );
 		softly.assertThat( lblFullName.isDisplayed( ) ).isTrue( );
@@ -168,49 +168,49 @@ public class CheckoutAddressPage extends BasePage {
 		softly.assertThat( lblFullNameErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblFullNameErrorMessage.getText( ) ).isEqualTo( "Please provide your full name." );
 		softly.assertAll( );
-		logger.info( "The correct full name error message (" + lblFullNameErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct full name error message (Please provide your full name.) is displayed" );
 	}
 
 	public void validateAddressLine1ErrorMessage ( ) {
 		softly.assertThat( lblAddressLine1ErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblAddressLine1ErrorMessage.getText( ) ).isEqualTo( "Please provide your address." );
 		softly.assertAll( );
-		logger.info( "The correct address line 1 error message (" + lblAddressLine1ErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct address line 1 error message (Please provide your address.) is displayed" );
 	}
 
 	public void validateAddressLine2ErrorMessage ( ) {
 		softly.assertThat( lblAddressLine2ErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblAddressLine2ErrorMessage.getText( ) ).isEqualTo( "Please provide your address." );
 		softly.assertAll( );
-		logger.info( "The correct address line 2 error message (" + lblAddressLine2ErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct address line 2 error message (Please provide your address.) is displayed" );
 	}
 
 	public void validateCityErrorMessage ( ) {
 		softly.assertThat( lblCityErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblCityErrorMessage.getText( ) ).isEqualTo( "Please provide your city." );
 		softly.assertAll( );
-		logger.info( "The correct city error message (" + lblCityErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct city error message (Please provide your city.) is displayed" );
 	}
 
 	public void validateStateRegionErrorMessage ( ) {
 		softly.assertThat( lblStateRegionErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblStateRegionErrorMessage.getText( ) ).isEqualTo( "Please provide your state/region." );
 		softly.assertAll( );
-		logger.info( "The correct state/region error message (" + lblStateRegionErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct state/region error message (Please provide your state/region.) is displayed" );
 	}
 
 	public void validateZipCodeErrorMessage ( ) {
 		softly.assertThat( lblZipCodeErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblZipCodeErrorMessage.getText( ) ).isEqualTo( "Please provide your zip code." );
 		softly.assertAll( );
-		logger.info( "The correct zip code error message (" + lblZipCodeErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct zip code error message (Please provide your zip code.) is displayed" );
 	}
 
 	public void validateCountryErrorMessage ( ) {
 		softly.assertThat( lblCountryErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblCountryErrorMessage.getText( ) ).isEqualTo( "Please provide your country." );
 		softly.assertAll( );
-		logger.info( "The correct country error message (" + lblCountryErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct country error message (Please provide your country.) is displayed" );
 	}
 
 }

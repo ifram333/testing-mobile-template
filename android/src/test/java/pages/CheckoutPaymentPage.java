@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 public class CheckoutPaymentPage extends BasePage {
 
 	@AndroidFindBy( xpath = "//android.view.ViewGroup[@content-desc=\"container header\"]/android.widget.TextView" )
-	private RemoteWebElement lblProducts;
+	private RemoteWebElement lblCheckout;
 
 	@AndroidFindBy( xpath = "//android.widget.ScrollView[@content-desc=\"checkout payment screen\"]/android.view.ViewGroup/android.widget.TextView[1]" )
 	private RemoteWebElement lblEnterAPaymentMethod;
@@ -103,8 +103,8 @@ public class CheckoutPaymentPage extends BasePage {
 
 	public void validatePage ( ) {
 		UiAutomator2Extension.WaitForElementVisibility( AppiumBy.xpath( "//android.view.ViewGroup[@content-desc=\"container header\"]/android.widget.TextView" ) );
-		softly.assertThat( lblProducts.isDisplayed( ) ).isTrue( );
-		softly.assertThat( lblProducts.getText( ) ).isEqualTo( "Checkout" );
+		softly.assertThat( lblCheckout.isDisplayed( ) ).isTrue( );
+		softly.assertThat( lblCheckout.getText( ) ).isEqualTo( "Checkout" );
 		softly.assertThat( lblEnterAPaymentMethod.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblEnterAPaymentMethod.getText( ) ).isEqualTo( "Enter a payment method" );
 		softly.assertThat( lblDisclaimer.isDisplayed( ) ).isTrue( );
@@ -137,28 +137,28 @@ public class CheckoutPaymentPage extends BasePage {
 		softly.assertThat( lblFullNameErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblFullNameErrorMessage.getText( ) ).isEqualTo( "Value looks invalid." );
 		softly.assertAll( );
-		logger.info( "The correct full name error message (" + lblFullNameErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct full name error message (Value looks invalid.) is displayed" );
 	}
 
 	public void validateCardNumberErrorMessage ( ) {
 		softly.assertThat( lblCardNumberErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblCardNumberErrorMessage.getText( ) ).isEqualTo( "Value looks invalid." );
 		softly.assertAll( );
-		logger.info( "The correct card number error message (" + lblCardNumberErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct card number error message (Value looks invalid.) is displayed" );
 	}
 
 	public void validateExpirationDateErrorMessage ( ) {
 		softly.assertThat( lblExpirationDateErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblExpirationDateErrorMessage.getText( ) ).isEqualTo( "Value looks invalid." );
 		softly.assertAll( );
-		logger.info( "The correct expiration date error message (" + lblExpirationDateErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct expiration date error message (Value looks invalid.) is displayed" );
 	}
 
 	public void validateSecurityCodeErrorMessage ( ) {
 		softly.assertThat( lblSecurityCodeErrorMessage.isDisplayed( ) ).isTrue( );
 		softly.assertThat( lblSecurityCodeErrorMessage.getText( ) ).isEqualTo( "Value looks invalid." );
 		softly.assertAll( );
-		logger.info( "The correct city error message (" + lblSecurityCodeErrorMessage.getText( ) + ") is displayed" );
+		logger.info( "The correct city error message (Value looks invalid.) is displayed" );
 	}
 
 }
